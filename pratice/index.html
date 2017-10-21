@@ -5,13 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Ajax and Fetch API</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <style>
+    </style>
 </head>
 <body>
-    <button id="btn">Click Me</button>
-    <div id="data">
-        
-    </div>
+    <div class="container">
+        <div class="row mt-4">
 
+            <div class="col-md-12">
+            <!-- <button id="xhr" class="btn btn-primary">Xml http request</button> -->
+     <button id="text" class="btn btn-primary mr-4">Textfile</button>
+     <button id="jsonFile" class="btn btn-warning mr-4 text-white">JSON File</button>
+     <button id="external" class="btn btn-success">External API</button>      
+
+     <form id="post" class="mt-3">
+        <div class="form-group">
+            <input type="text" id="p-title" class="form-control" placeholder="Email">
+            <br>
+            <textarea id="p-body" cols="40" rows="5"></textarea>
+            <br>
+            <button type="submit">Submit</button>
+        </div>
+     </form>
+    </div>
+    
+     <!--<button id="ajax">Ajax</button>
+     <button id="axios">Axios</button> -->
+     <div id="data" class="col-md-6 mt-4">
+     </div>
+
+        </div>
+    </div>
+    
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

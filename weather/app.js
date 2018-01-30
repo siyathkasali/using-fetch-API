@@ -3,6 +3,18 @@ const ui = new UI();
 document.addEventListener('DOMContentLoaded', getWeather);
 // weather.changeLocation();
 
+
+document.getElementById('w-change').addEventListener('click', changedata);
+function changedata(e){
+  const city = document.getElementById('city').value;
+  const state = document.getElementById('state').value;
+  weather.changeLocation(city,state);
+  getWeather();
+
+  $('#locModal').modal('hide');
+}
+
+
 function getWeather(){
   weather.getData()
   .then(res => {
@@ -10,3 +22,9 @@ function getWeather(){
   })
   .catch(err => console.log(err));
 }
+
+
+
+
+
+

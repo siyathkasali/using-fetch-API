@@ -1,4 +1,4 @@
-import redit from './redit';
+import reddit from './redditApi';
 
 const outputResult = document.getElementById('results');
 
@@ -15,25 +15,22 @@ function showresults(e){
     showMessage('Enter a valid Input', 'alert-danger');
   }
   // Search Result
-  redit.search(input, sortBy, searchLimit)
+  reddit.search(input, sortBy, searchLimit)
   .then(results => {
     let output = '<div class="card-columns">'
     results.forEach(post => {
+      let image = post.preview ? post.preview.images[0].source.url : 'https://cdn.comparitech.com/wp-content/uploads/2017/08/reddit-1.jpg';
+      console.log(post);
        output += `
        <div class="card">
-  <img class="card-img-top" src="..." alt="Card image cap">
+  <img class="card-img-top" src="${image}" alt="Card image cap">
   <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-  </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">Cras justo odio</li>
-    <li class="list-group-item">Dapibus ac facilisis in</li>
-    <li class="list-group-item">Vestibulum at eros</li>
-  </ul>
-  <div class="card-body">
-    <a href="#" class="card-link">Card link</a>
-    <a href="#" class="card-link">Another link</a>
+    <h5 class="card-title">${post.title}</h5>
+    <p class="card-text">${truncateText(post.selftext,100)}</p>
+    <a href="${post.url}" target="_blank" class="btn btn-primary">Read More</a>
+    <hr>
+    <span class="badge badge-primary">${post.subreddit}</span>
+    <span class="badge badge-dark">${post.score}</span>
   </div>
 </div>
        `; 
@@ -59,4 +56,10 @@ function showMessage(msg, className){
   },3000);
 }
 
+// Truncate Text
 
+function truncateText(text, limit){
+  const shortend = text.indexOf(' ', limit);
+  if(shortend == -1) return text;
+  return text.substring(0, shortend);
+}

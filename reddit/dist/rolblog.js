@@ -69,7 +69,7 @@ require = (function (modules, cache, entry) {
 
   // Override the current require with this new one
   return newRequire;
-})({17:[function(require,module,exports) {
+})({6:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -80,12 +80,12 @@ exports.default = {
     return fetch(`https://wwww.reddit.com/search.json?q=${input}&sort=${sortBy}&limit=${searchLimit}`).then(res => res.json()).then(data => data.data.children.map(data => data.data)).catch(err => console.log(err));
   }
 };
-},{}],2:[function(require,module,exports) {
+},{}],4:[function(require,module,exports) {
 'use strict';
 
-var _redit = require('./redit');
+var _redditApi = require('./redditApi');
 
-var _redit2 = _interopRequireDefault(_redit);
+var _redditApi2 = _interopRequireDefault(_redditApi);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -104,24 +104,21 @@ function showresults(e) {
     showMessage('Enter a valid Input', 'alert-danger');
   }
   // Search Result
-  _redit2.default.search(input, sortBy, searchLimit).then(results => {
+  _redditApi2.default.search(input, sortBy, searchLimit).then(results => {
     let output = '<div class="card-columns">';
     results.forEach(post => {
+      let image = post.preview ? post.preview.images[0].source.url : 'https://cdn.comparitech.com/wp-content/uploads/2017/08/reddit-1.jpg';
+      console.log(post);
       output += `
        <div class="card">
-  <img class="card-img-top" src="..." alt="Card image cap">
+  <img class="card-img-top" src="${image}" alt="Card image cap">
   <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-  </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">Cras justo odio</li>
-    <li class="list-group-item">Dapibus ac facilisis in</li>
-    <li class="list-group-item">Vestibulum at eros</li>
-  </ul>
-  <div class="card-body">
-    <a href="#" class="card-link">Card link</a>
-    <a href="#" class="card-link">Another link</a>
+    <h5 class="card-title">${post.title}</h5>
+    <p class="card-text">${truncateText(post.selftext, 100)}</p>
+    <a href="${post.url}" target="_blank" class="btn btn-primary">Read More</a>
+    <hr>
+    <span class="badge badge-primary">${post.subreddit}</span>
+    <span class="badge badge-dark">${post.score}</span>
   </div>
 </div>
        `;
@@ -145,7 +142,15 @@ function showMessage(msg, className) {
     document.querySelector('.alert').remove();
   }, 3000);
 }
-},{"./redit":17}],18:[function(require,module,exports) {
+
+// Truncate Text
+
+function truncateText(text, limit) {
+  const shortend = text.indexOf(' ', limit);
+  if (shortend == -1) return text;
+  return text.substring(0, shortend);
+}
+},{"./redditApi":6}],8:[function(require,module,exports) {
 
 var global = (1, eval)('this');
 var OldModule = module.bundle.Module;
@@ -165,7 +170,7 @@ module.bundle.Module = Module;
 
 if (!module.bundle.parent && typeof WebSocket !== 'undefined') {
   var hostname = '' || location.hostname;
-  var ws = new WebSocket('ws://' + hostname + ':' + '61205' + '/');
+  var ws = new WebSocket('ws://' + hostname + ':' + '50036' + '/');
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
 
@@ -266,5 +271,5 @@ function hmrAccept(bundle, id) {
     return hmrAccept(global.require, id);
   });
 }
-},{}]},{},[18,2])
+},{}]},{},[8,4])
 //# sourceMappingURL=/dist/rolblog.map
